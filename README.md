@@ -1,17 +1,19 @@
 # substack-notes
 
-A Claude Code skill that drafts **Substack Notes** (50–250 words) calibrated for the platform's algorithm and your specific goal — picking from 8 Note types, refusing to fabricate, and closing with conversation-driven CTAs.
+A Claude skill that drafts **Substack Notes** (50–250 words) calibrated for the platform's algorithm and your specific goal — picking from 8 Note types, refusing to fabricate, and closing with conversation-driven CTAs.
 
 ## Installation
 
-This is a [Claude Code skill](https://docs.claude.com/en/docs/claude-code/skills). Drop the `substack-notes` folder into your skills directory:
+### Option A — Local skills directory
 
-**User-level (available in every project):**
+Drop the `substack-notes` folder into your skills directory:
+
+**User-level (available everywhere):**
 ```
 ~/.claude/skills/substack-notes/
 ```
 
-**Project-level (this repo only):**
+**Project-level (current repo only):**
 ```
 <your-project>/.claude/skills/substack-notes/
 ```
@@ -26,7 +28,28 @@ substack-notes/
     └── anti-fabrication.md
 ```
 
-Restart Claude Code (or the IDE extension) so the skill is picked up.
+Restart your Claude client so the skill is picked up.
+
+### Option B — Upload as a custom skill (Claude.ai web / Claude Cowork)
+
+If you're using **Claude.ai on the web** or **Claude Cowork** (no local skills directory), you can install the skill by uploading a zip:
+
+1. Download or clone this repo.
+2. Locate the [skills/substack-notes/](skills/substack-notes/) folder.
+3. Zip the **`substack-notes` folder itself** (not its parent), so the archive root contains `SKILL.md` and `references/`:
+   ```
+   substack-notes.zip
+   └── substack-notes/
+       ├── SKILL.md
+       └── references/
+           ├── note-types.md
+           └── anti-fabrication.md
+   ```
+   - **macOS:** right-click the `substack-notes` folder → *Compress*.
+   - **Windows:** right-click → *Send to* → *Compressed (zipped) folder*.
+   - **CLI:** `cd skills && zip -r substack-notes.zip substack-notes`
+4. In Claude.ai / Claude Cowork, open **Settings → Capabilities → Skills** (or the *Custom skills* / *Upload skill* section, depending on your plan).
+5. Click **Upload skill** and select `substack-notes.zip`.
 
 ## Usage
 
@@ -53,7 +76,7 @@ The skill also auto-activates when your message matches its description. Example
 
 ### What the skill does
 
-1. **Detects missing critical info** (goal, audience, specific detail) and batches 1–3 clarifying questions via `AskUserQuestion`.
+1. **Detects missing critical info** (goal, audience, specific detail) and batches 1–3 clarifying questions.
 2. **Proposes 1–2 Note types** from the 8 formats with a one-line reason — and optionally previews hook drafts side-by-side so you can compare.
 3. **Drafts the Note** in first-person, conversational, read-aloud-friendly prose, applying the chosen type's template (hook ≤10 words, 3–5 short paragraphs, conversation CTA).
 4. **Outputs** the Note plus a meta line: `[{type-id} · {N}w]`.
